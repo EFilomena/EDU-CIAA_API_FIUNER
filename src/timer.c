@@ -78,6 +78,8 @@
 /*==================[internal data declaration]==============================*/
 
 void (*pIsrTimer)();
+void (*pIsrTimer0)();
+
 /*==================[internal functions declaration]=========================*/
 
 /*==================[internal data definition]===============================*/
@@ -95,6 +97,27 @@ void timerInit(uint32_t time_ms,void *pfunc){
 	pIsrTimer();
 }
 
+ void ISR_Timer0(){
+	if (Chip_TIMER_MatchPending(LPC_TIMER0, 0)) {
+	 		Chip_TIMER_ClearMatch(LPC_TIMER0, 0);
+	 }
+	pIsrTimer0();
+}
+
+void timer0Init(uint32_t time_us,void *pfunc){
+    pIsrTimer0=pfunc;
+	Chip_TIMER_Init(LPC_TIMER0);
+	//falta convertit time_ms en el match num
+	uint32_t FrecuenciaClk = Chip_Clock_GetBaseClocktHz (CLK_BASE_MX); // Leo la vellocidad del micro en khz
+	uint32_t MatchCount= time_us*(FrecuenciaClk/1000000);
+	
+	Chip_TIMER_SetMatch(LPC_TIMER0, 0, MatchCount);
+	Chip_TIMER_ResetOnMatchEnable(LPC_TIMER0, 0);
+	Chip_TIMER_MatchEnableInt(LPC_TIMER0, 0);
+	Chip_TIMER_Enable(LPC_TIMER0);
+	NVIC_EnableIRQ(TIMER0_IRQn);
+
+}
 /*==================[external data definition]===============================*/
 
 /*==================[internal functions definition]==========================*/

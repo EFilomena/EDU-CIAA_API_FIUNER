@@ -79,9 +79,7 @@ uint8_t init_UART_FTDI_EDUCIAA(void)
 {
 
 	/* UART2 (USB-UART) */
-	Chip_SCU_PinMux(7, 1, MD_PDN, FUNC6);              /* P7_1: UART2_TXD */
-	Chip_SCU_PinMux(7, 2, MD_PLN|MD_EZI|MD_ZI, FUNC6); /* P7_2: UART2_RXD */
-
+	
 	Chip_UART_Init(LPC_USART2);
 	Chip_UART_SetBaud(LPC_USART2, 115200);
 
@@ -89,6 +87,8 @@ uint8_t init_UART_FTDI_EDUCIAA(void)
 
 	Chip_UART_TXEnable(LPC_USART2);
 
+Chip_SCU_PinMux(7, 1, MD_PDN, FUNC6);              /* P7_1: UART2_TXD */
+	Chip_SCU_PinMux(7, 2, MD_PLN|MD_EZI|MD_ZI, FUNC6); /* P7_2: UART2_RXD */
 
 	return TRUE;
 }
@@ -117,7 +117,7 @@ uint8_t init_UART_RS485_EDUCIAA(void)
 
 	Chip_SCU_PinMux(9, 5, MD_PDN, FUNC7);              /* P9_5: UART0_TXD */
 	Chip_SCU_PinMux(9, 6, MD_PLN|MD_EZI|MD_ZI, FUNC7); /* P9_6: UART0_RXD */
-
+    
 	Chip_UART_SetRS485Flags(LPC_USART0, UART_RS485CTRL_DCTRL_EN | UART_RS485CTRL_OINV_1);
 
 	Chip_SCU_PinMux(6, 2, MD_PDN, FUNC2);              /* P6_2: UART0_DIR */
@@ -130,7 +130,7 @@ uint8_t init_UART_RS232_EDUCIAA(void)
 
 
 	Chip_UART_Init(LPC_USART3);
-	Chip_UART_SetBaud(LPC_USART3, 9600);
+	Chip_UART_SetBaud(LPC_USART3, 19200);
 
 	Chip_UART_SetupFIFOS(LPC_USART3, UART_FCR_FIFO_EN | UART_FCR_TRG_LEV0);
 
@@ -146,21 +146,29 @@ uint8_t readByte_UART_USB_EDUCIAA()
 {
 	return Chip_UART_ReadByte(LPC_USART2);
 }
-
-
-void writeByte_UART_USB_EDUCIAA(uint8_t dato)
-{
-	Chip_UART_SendByte(LPC_USART2,dato);
-}
-
 uint8_t readByte_UART_RS232_EDUCIAA(){
 	return Chip_UART_ReadByte(LPC_USART3);
 
 }
 
+void writeByte_UART_USB_EDUCIAA(uint8_t dato)
+{
+	Chip_UART_SendByte(LPC_USART2,dato);
+}
+void writeByte_UART_RS232_EDUCIAA(uint8_t dato)
+{
+	Chip_UART_SendByte(LPC_USART3,dato);
+}
+
+
+
 uint32_t readStatus_UART_USB_EDUCIAA()
 {
 	return (Chip_UART_ReadLineStatus((LPC_USART_T *)LPC_USART2) & UART_LSR_THRE);
+}
+uint32_t readStatus_UART_RS232_EDUCIAA()
+{
+	return (Chip_UART_ReadLineStatus((LPC_USART_T *)LPC_USART3) & UART_LSR_THRE);
 }
 
 void sendString_UART_USB_EDUCIAA(char message[], uint8_t size)
@@ -172,6 +180,25 @@ void sendString_UART_USB_EDUCIAA(char message[], uint8_t size)
 	while(( readStatus_UART_USB_EDUCIAA() != 0) && (msjIndex < size))
 	{
 		Chip_UART_SendByte((LPC_USART_T *)LPC_USART2, message[msjIndex]);
+
+		/*delay*/
+		for (i=0;i<50000;i++)
+		{
+			asm  ("nop");
+		}
+		msjIndex++;
+	}
+
+}
+void sendString_UART_RS232_EDUCIAA(char message[], uint8_t size)
+{
+	uint8_t msjIndex = 0;
+	uint64_t i;
+
+	/* sending byte by byte*/
+	while(( readStatus_UART_RS232_EDUCIAA() != 0) && (msjIndex < size))
+	{
+		Chip_UART_SendByte(LPC_USART3, message[msjIndex]);
 
 		/*delay*/
 		for (i=0;i<50000;i++)

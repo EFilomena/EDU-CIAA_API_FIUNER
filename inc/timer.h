@@ -93,6 +93,7 @@
  ** \return FALSE if an error occurs, in other case returns TRUE
  **/
 void timerInit(uint32_t time_ms,void *pfunc);
+void timer0Init(uint32_t time_us,void *pfunc);
 
 
 
