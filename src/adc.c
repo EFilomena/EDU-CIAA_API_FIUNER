@@ -97,13 +97,15 @@ uint8_t init_ADC_EDUCIAA(void)
 
 	Chip_ADC_Init(LPC_ADC0,&configADC);
 	Chip_ADC_EnableChannel(LPC_ADC0,ADC_CH1,ENABLE);
+	Chip_ADC_EnableChannel(LPC_ADC0,ADC_CH2,ENABLE);
+	Chip_ADC_EnableChannel(LPC_ADC0,ADC_CH3,ENABLE);
 	Chip_ADC_SetSampleRate(LPC_ADC0, &configADC,ADC_MAX_SAMPLE_RATE);
 
 	return TRUE;
 }
 
 /** \brief ADC Ch1 Acquisition method by pooling */
-uint16_t read_ADC_value_pooling(void)
+uint16_t read_ADC_value_pooling(ADC_CHANNEL_T Canal)
 {
 	/** \details
 	 * This function initialize the DAC peripheral in the EDU-CIAA board,
@@ -118,12 +120,12 @@ uint16_t read_ADC_value_pooling(void)
 	/** Start Acquisition */
 	Chip_ADC_SetStartMode(LPC_ADC0, ADC_START_NOW, ADC_TRIGGERMODE_RISING);
 	/** The pooling magic! */
-	while (Chip_ADC_ReadStatus(LPC_ADC0, ADC_CH1, ADC_DR_DONE_STAT) != SET)
+	while (Chip_ADC_ReadStatus(LPC_ADC0, Canal, ADC_DR_DONE_STAT) != SET)
 	{
 		/** pooooliiinnggg maaagggicccc plif plif pluf pluf */
 	}
 	/** Conversion complete, and value reading */
-	Chip_ADC_ReadValue(LPC_ADC0,ADC_CH1, &valueRead);
+	Chip_ADC_ReadValue(LPC_ADC0,Canal, &valueRead);
 
 	return valueRead;
 }
@@ -133,9 +135,9 @@ void ADC_Start(void){
   Chip_ADC_SetStartMode(LPC_ADC0, ADC_START_NOW, ADC_TRIGGERMODE_RISING);
 	
 }
-uint16_t read_ADC_value(void){
+uint16_t read_ADC_value(ADC_CHANNEL_T Canal){
   uint16_t data;
-  Chip_ADC_ReadValue(LPC_ADC0,ADC_CH1, &data);
+  Chip_ADC_ReadValue(LPC_ADC0,Canal, &data);
   return data;
 
   }
