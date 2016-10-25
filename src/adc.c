@@ -68,7 +68,7 @@ void (*pIsrADC0)();
 /*==================[internal functions declaration]=========================*/
 
 /*==================[internal data definition]===============================*/
-
+ADC_CHANNEL_T Canal;
 /*==================[external data definition]===============================*/
 
 /*==================[internal functions definition]==========================*/
@@ -96,16 +96,14 @@ uint8_t init_ADC_EDUCIAA(void)
 	configADC.bitsAccuracy=ADC_10BITS;
 
 	Chip_ADC_Init(LPC_ADC0,&configADC);
-	Chip_ADC_EnableChannel(LPC_ADC0,ADC_CH1,ENABLE);
-	Chip_ADC_EnableChannel(LPC_ADC0,ADC_CH2,ENABLE);
-	Chip_ADC_EnableChannel(LPC_ADC0,ADC_CH3,ENABLE);
+	//Chip_ADC_EnableChannel(LPC_ADC0,ADC_CH1,ENABLE);
 	Chip_ADC_SetSampleRate(LPC_ADC0, &configADC,ADC_MAX_SAMPLE_RATE);
 
 	return TRUE;
 }
 
 /** \brief ADC Ch1 Acquisition method by pooling */
-uint16_t read_ADC_value_pooling(ADC_CHANNEL_T Canal)
+uint16_t read_ADC_value_pooling(void)
 {
 	/** \details
 	 * This function initialize the DAC peripheral in the EDU-CIAA board,
@@ -116,7 +114,6 @@ uint16_t read_ADC_value_pooling(ADC_CHANNEL_T Canal)
 	 * \return uint8_t: TBD (to support errors in the init function)
 	 * */
 	uint16_t valueRead = 0 ;
-
 	/** Start Acquisition */
 	Chip_ADC_SetStartMode(LPC_ADC0, ADC_START_NOW, ADC_TRIGGERMODE_RISING);
 	/** The pooling magic! */
@@ -130,12 +127,18 @@ uint16_t read_ADC_value_pooling(ADC_CHANNEL_T Canal)
 	return valueRead;
 }
 
+void ADC_Sel(ADC_CHANNEL_T C){
+	Canal=C;
+	Chip_ADC_EnableChannel(LPC_ADC0,Canal,ENABLE);
+}
+
+
 /** Start Acquisition */
 void ADC_Start(void){
   Chip_ADC_SetStartMode(LPC_ADC0, ADC_START_NOW, ADC_TRIGGERMODE_RISING);
 	
 }
-uint16_t read_ADC_value(ADC_CHANNEL_T Canal){
+uint16_t read_ADC_value(void){
   uint16_t data;
   Chip_ADC_ReadValue(LPC_ADC0,Canal, &data);
   return data;
@@ -146,7 +149,7 @@ void enable_ADC_IRQ(void *pfunc){
 	pIsrADC0=pfunc;
 	/*Enable interrupt for ADC channel */
 
-	Chip_ADC_Int_SetChannelCmd(LPC_ADC0,ADC_CH1,ENABLE);
+	Chip_ADC_Int_SetChannelCmd(LPC_ADC0,Canal,ENABLE);
 	NVIC_EnableIRQ(ADC0_IRQn);
   }
 

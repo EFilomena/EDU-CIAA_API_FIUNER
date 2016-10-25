@@ -55,9 +55,7 @@
  */
 
 /*==================[inclusions]=============================================*/
-#include "app.h"
-
-
+#include "baremetal_adc_timer_irq.h"
 
 /*==================[macros and definitions]=================================*/
 
@@ -93,7 +91,13 @@ static void ISR_NoHandler(void);
 
 /** \brief Dummy empty ISR Handler */
 static void RITimerISR(void);
-void ISR_RIT();
+
+
+void ISR_RIT(void);
+
+void ISR_ADC0(void);
+
+void ISR_Timer0(void);
 
 /*==================[internal data definition]===============================*/
 
@@ -263,13 +267,13 @@ void (* const g_pfnVectors[])(void) = {
    ISR_NoHandler,      /* 0x18 0x00000060 - No Handler set for ISR USB0 (IRQ 8) */
    ISR_NoHandler,      /* 0x19 0x00000064 - No Handler set for ISR USB1 (IRQ 9) */
    ISR_NoHandler,      /* 0x1a 0x00000068 - No Handler set for ISR SCT (IRQ 10) */
-   ISR_RIT,        /* 0x1b 0x0000006C - No Handler set for ISR RIT (IRQ 11) */
-   ISR_NoHandler,      /* 0x1c 0x00000070 - No Handler set for ISR TIMER0 (IRQ 12) */
+   ISR_RIT,        /* 0x1b 0x0000006C -  Handler set for ISR RIT (IRQ 11) */
+   ISR_Timer0,      /* 0x1c 0x00000070 - No Handler set for ISR TIMER0 (IRQ 12) */
    ISR_NoHandler,      /* 0x1d 0x00000074 - No Handler set for ISR TIMER1 (IRQ 13) */
    ISR_NoHandler,      /* 0x1e 0x00000078 - No Handler set for ISR TIMER2 (IRQ 14) */
    ISR_NoHandler,      /* 0x1f 0x0000007C - No Handler set for ISR TIMER3 (IRQ 15) */
    ISR_NoHandler,      /* 0x20 0x00000080 - No Handler set for ISR MCPWM (IRQ 16) */
-   ISR_NoHandler,      /* 0x21 0x00000084 - No Handler set for ISR ADC0 (IRQ 17) */
+   ISR_ADC0,       /* 0x21 0x00000084 -Handler set for ISR ADC0 (IRQ 17) */
    ISR_NoHandler,      /* 0x22 0x00000088 - No Handler set for ISR I2C0 (IRQ 18) */
    ISR_NoHandler,      /* 0x23 0x0000008C - No Handler set for ISR I2C1 (IRQ 19) */
    ISR_NoHandler,      /* 0x24 0x00000090 - No Handler set for ISR SPI (IRQ 20) */

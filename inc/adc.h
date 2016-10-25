@@ -1,4 +1,4 @@
-/* Copyright 2016, 
+	/* Copyright 2016,
  * Leandro D. Medus
  * lmedus@bioingenieria.edu.ar
  * Eduardo Filomena
@@ -80,7 +80,9 @@
 
 
 /*==================[external data declaration]==============================*/
-
+#define  CH1 ADC_CH1
+#define  CH2 ADC_CH2
+#define  CH3 ADC_CH3
 
 /*==================[external functions declaration]=========================*/
 /** \brief Initialization function to control adc 0 channel 0 in the EDU-CIAA BOARD 
@@ -94,6 +96,7 @@ uint8_t init_ADC_EDUCIAA(void);
  **/
 uint16_t read_ADC_value_pooling(void);
 
+void ADC_Sel(ADC_CHANNEL_T C);
 /** \brief adc0 channel 1 start of convertion
  ** 
  **/
