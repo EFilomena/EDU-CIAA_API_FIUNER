@@ -129,6 +129,9 @@ uint16_t read_ADC_value_pooling(void)
 
 void ADC_Sel(ADC_CHANNEL_T C){
 	Canal=C;
+	Chip_ADC_EnableChannel(LPC_ADC0,CH1,DISABLE);
+	Chip_ADC_EnableChannel(LPC_ADC0,CH2,DISABLE);
+	Chip_ADC_EnableChannel(LPC_ADC0,CH3,DISABLE);
 	Chip_ADC_EnableChannel(LPC_ADC0,Canal,ENABLE);
 }
 
