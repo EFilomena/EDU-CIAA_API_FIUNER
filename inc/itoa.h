@@ -75,7 +75,7 @@
 
 /*==================[external functions definition]==========================*/
 /** \Función itoa: convierte un entero a una cadena */
-char* itoa(uint32_t val, uint8_t base);
+char* itoa(uint16_t value, char* result, uint16_t base);
 
 /** @} doxygen end group definition */
 /** @} doxygen end group definition */

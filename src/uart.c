@@ -177,7 +177,7 @@ void sendString_UART_USB_EDUCIAA(char message[], uint8_t size)
 	uint64_t i;
 
 	/* sending byte by byte*/
-	while(( readStatus_UART_USB_EDUCIAA() != 0) && (msjIndex < size))
+	while(( readStatus_UART_USB_EDUCIAA() != 0) && (msjIndex < size) && (message[msjIndex]!=0))
 	{
 		Chip_UART_SendByte((LPC_USART_T *)LPC_USART2, message[msjIndex]);
 

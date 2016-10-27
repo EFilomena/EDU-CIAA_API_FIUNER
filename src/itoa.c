@@ -67,25 +67,37 @@
 /*==================[external data definition]===============================*/
 
 /*==================[internal functions definition]==========================*/
+/* A utility function to reverse a string  */
+
 
 /*==================[external functions definition]==========================*/
-/** \Función itoa: convierte un entero a una cadena */
+/** \Funciï¿½n itoa: convierte un entero a una cadena */
 
+char* itoa(uint16_t value, char* result, uint16_t base) {
+   // check that the base is valid
+   if (base < 2 || base > 36) { *result = '\0'; return result; }
+
+   char* ptr = result, *ptr1 = result, tmp_char;
+   uint16_t tmp_value;
+
+   do {
+      tmp_value = value;
+      value /= base;
+      *ptr++ = "zyxwvutsrqponmlkjihgfedcba9876543210123456789abcdefghijklmnopqrstuvwxyz" [35 + (tmp_value - value * base)];
+   } while ( value );
+
+   // Apply negative sign
+   if (tmp_value < 0) *ptr++ = '-';
+   *ptr-- = '\0';
+   while(ptr1 < ptr) {
+      tmp_char = *ptr;
+      *ptr--= *ptr1;
+      *ptr1++ = tmp_char;
+   }
+   return result;
+}
 // sacado de: http://www.strudel.org.uk/itoa/
 
-char* itoa(uint32_t val, uint8_t base){
-	
-	static char buf[32] = {0};
-	
-	uint32_t i = 30;
-	
-	for(; val && i ; --i, val /= base)
-	
-		buf[i] = "0123456789abcdef"[val % base];
-	
-	return &buf[i+1];
-	
-}
 
 
 
