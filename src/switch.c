@@ -55,11 +55,12 @@
  * modification history (new versions first)
  * -----------------------------------------------------------
  * 20160422 v0.1 initials initial version leo
- * 20160807 v0.2 modifications and improvements made by Eduardo Filomena 
+ * 20160807 v0.2 modifications and improvements made by Eduardo Filomena
+ * 20160808 v0.3 modifications and improvements made by Juan Manuel Reta
  */
 
 /*==================[inclusions]=============================================*/
-#include "teclas.h"
+#include "../../../projects/drivers_bm/inc/teclas.h"
 
 /*==================[macros and definitions]=================================*/
 /* Mapeo de pines Pulsadores
@@ -103,7 +104,7 @@
 
 /*==================[external functions definition]==========================*/
 /** \brief Initialize method for the basic push-buttons in the EDU-CIAA board */
-uint8_t initGPIO_switches_EDUCIAA(void)
+uint8_t Init_Switches(void)
 {
 	/** \details
 	 * This function initialize the four switches present in the EDU-CIAA board,
@@ -133,8 +134,7 @@ uint8_t initGPIO_switches_EDUCIAA(void)
 	return TRUE;
 }
 
-
-uint8_t readSwitches(void)
+uint8_t Read_Switches(void)
 {
 	uint8_t switchPressed = 0;
 

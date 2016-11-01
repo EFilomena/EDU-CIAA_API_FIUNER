@@ -42,8 +42,6 @@
 #define LED_H
 
 
-
-
 /*==================[inclusions]=============================================*/
 #include "stdint.h"
 #include "chip.h"
@@ -55,41 +53,53 @@
 /*==================[typedef]================================================*/
 
 /*==================[external data declaration]==============================*/
-//enum LED_COLOR {RED_LED, YELLOW_LED, GREEN_LED};
- enum LED_COLOR {RGB_R_LED=1,RGB_G_LED=2,RGB_B_LED=4,RED_LED=8, YELLOW_LED=16, GREEN_LED=32};
- enum LED_STATUS {OFF=0, ON=1};
-#define  LED_ALL RGB_R_LED|RGB_G_LED|RGB_B_LED|RED_LED|YELLOW_LED|GREEN_LED
-#define  LED_NONE 0;
-#define	 LED_MIN RGB_R_LED
-#define	 LED_MAX GREEN_LED
-	 
+/** \brief Definition of constants to reference the EDU-CIAA leds.
+ **
+ **/
+enum LED_COLOR {RGB_R_LED, RGB_G_LED, RGB_B_LED, RED_LED, YELLOW_LED, GREEN_LED};
+
+
+/** \brief Definition of constants to control the EDU-CIAA leds.
+ **
+ **/
+enum LED_STATUS {OFF, ON};
+
 /*==================[external functions declaration]=========================*/
-/** \brief Initialization function to control leds in the EDU-CIAA BOARD 
+
+/** \brief Initialization function of EDU-CIAA leds
+ **
+ ** \Mapping ports (PinMux function), set direction and initial state of leds ports
+ **
+ ** \param[in] No parameter
  ** 
  ** \return TRUE if no error
  **/
-uint8_t initGPIO_leds_EDUCIAA(void);
+uint8_t Init_Leds(void);
+
+
 /** \brief Function to turn on a specific led 
  ** 
  ** \param[in] led 
  **
  ** \return FALSE if an error occurs, in other case returns TRUE
  **/
-uint8_t ledOn(uint8_t led);
+uint8_t Led_On(uint8_t led);
+
 /** \brief Function to turn off a specific led 
  ** 
  ** \param[in] led 
  **
  ** \return FALSE if an error occurs, in other case returns TRUE
  **/
-uint8_t ledOff(uint8_t led);
+uint8_t Led_Off(uint8_t led);
+
 /** \brief Function to toggle a specific led 
  ** 
  ** \param[in] led 
  **
  ** \return FALSE if an error occurs, in other case returns TRUE
  **/
-uint8_t toggleLed(uint8_t led);
+uint8_t Led_Toggle(uint8_t led);
 
 /** @} doxygen end group definition */
 /** @} doxygen end group definition */

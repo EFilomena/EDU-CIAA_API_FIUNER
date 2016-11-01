@@ -40,8 +40,8 @@
  */
 
 
-#ifndef TECLAS_H
-#define TECLAS_H
+#ifndef SWITCH_H
+#define SWITCH_H
 /** \brief Bare Metal header for switches in EDU-CIAA NXP
  **
  ** This is a driver for four switches mounted on the board
@@ -68,6 +68,7 @@
  * -----------------------------------------------------------
  * 20160422 v0.1 initials initial version leo
  * 20160807 v0.2 modifications and improvements made by Eduardo Filomena 
+ * 20160808 v0.3 modifications and improvements made by Juan Manuel Reta
  */
 
 /*==================[inclusions]=============================================*/
@@ -82,20 +83,20 @@
 
 
 /*==================[external data declaration]==============================*/
-enum SWITCHES {TEC1=1, TEC2=2, TEC3=4, TEC4=8};
+enum SWITCHES {TEC1, TEC2, TEC3, TEC4};
 
 /*==================[external functions declaration]=========================*/
 /** \brief Initialization function to control basic push-buttons in the EDU-CIAA BOARD 
  ** 
  ** \return TRUE if no error
  **/
-uint8_t initGPIO_switches_EDUCIAA(void);
+uint8_t Init_Switches(void);
 
 /** \brief Function to read basic push-buttons 
  **
  ** \return 0 if no keypressed, TEC1 TEC2 TEC3 TEC4 in other case
  **/
-uint8_t readSwitches(void);
+uint8_t Read_Switches(void);
 
 /** @} doxygen end group definition */
 /** @} doxygen end group definition */
