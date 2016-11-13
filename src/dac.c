@@ -89,13 +89,15 @@ uint8_t init_DAC_EDUCIAA(void)
 	 * */
 
 	/** DAC function selection */
-	Chip_SCU_DAC_Analog_Config();
+	//Chip_SCU_DAC_Analog_Config();
 
 	/** DAC initialization */
 	Chip_DAC_Init(LPC_DAC);
 	Chip_DAC_SetBias(LPC_DAC, DAC_MAX_UPDATE_RATE_400kHz);
 	Chip_DAC_SetDMATimeOut(LPC_DAC, 0xffff);
 	Chip_DAC_ConfigDAConverterControl(LPC_DAC, DAC_CNT_ENA | DAC_DMA_ENA);
+
+	LPC_SCU->ENAIO[2] =0;
 
 	return TRUE;
 }

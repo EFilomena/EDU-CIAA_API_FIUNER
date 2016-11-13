@@ -83,7 +83,7 @@
 
 
 /*==================[external data declaration]==============================*/
-enum SWITCHES {TEC1, TEC2, TEC3, TEC4};
+enum SWITCHES {TEC1=1, TEC2=2, TEC3=4, TEC4=8};
 
 /*==================[external functions declaration]=========================*/
 /** \brief Initialization function to control basic push-buttons in the EDU-CIAA BOARD 

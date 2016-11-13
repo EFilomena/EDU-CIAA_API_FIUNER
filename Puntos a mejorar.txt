@@ -4,3 +4,4 @@ etc.) deberían funcionar con cualquier UART (con algún parámetro)
 3) 11/10/2016 EF: El driver de ADC está bastante incompleto. Podríamos hablar con German Pressel para que nos de una mano
 y completarlo  
 
+4) 3/11/2016  EF: Driver de GPIO

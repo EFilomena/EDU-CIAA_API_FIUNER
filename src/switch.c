@@ -60,7 +60,7 @@
  */
 
 /*==================[inclusions]=============================================*/
-#include "../../../projects/drivers_bm/inc/teclas.h"
+#include "switch.h"
 
 /*==================[macros and definitions]=================================*/
 /* Mapeo de pines Pulsadores
