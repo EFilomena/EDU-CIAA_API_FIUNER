@@ -4,4 +4,10 @@ etc.) deberían funcionar con cualquier UART (con algún parámetro)
 3) 11/10/2016 EF: El driver de ADC está bastante incompleto. Podríamos hablar con German Pressel para que nos de una mano
 y completarlo  
 
-4) 3/11/2016  EF: Driver de GPIO
+4) 3/11/2016  EF: Driver de GPIO (Probarlo)
+
+5) 18/8/2017 Timer: completar con otros timers
+
+6) 18/8/2017  Vector.o con todas las interrupciones --> PROBAR!
+
+7) 18/8/2017 Hacer: SPI - I2C - PWM 
